@@ -1,0 +1,47 @@
+.mainContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.titleContainer {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.inputContainer {
+  margin-bottom: 16px;
+}
+
+.inputBox {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 4px; /* Ensure some space between input and error message */
+}
+
+.errorLabel {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.inputButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.inputButton:hover {
+  background-color: #0056b3;
+}

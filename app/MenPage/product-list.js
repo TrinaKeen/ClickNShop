@@ -9,8 +9,8 @@ export default function ProductList({ products }) {
     const sortedProducts = [...products].sort((a, b) => {
       if (sortBy === 'name') {
         return a.name.localeCompare(b.name);
-      } else if (sortBy === 'category') {
-        return a.category.localeCompare(b.category);
+      } else if (sortBy === 'price') {
+        return a.price.localeCompare(b.price);
       }
       return 0;
     });
@@ -22,23 +22,23 @@ export default function ProductList({ products }) {
             className={`px-4 py-2 mr-2 rounded ${sortBy === 'name' ? 'bg-orange-500 text-black' : 'bg-gray-200'}`}
             onClick={() => setSortBy('name')}
           >
-            Name
+            Apparel
           </button>
-          <button
-            className={`px-4 py-2 rounded ${sortBy === 'category' ? 'bg-orange-500 text-black' : 'bg-gray-200'}`}
-            onClick={() => setSortBy('category1')}
+          {/* <button
+            className={`px-4 py-2 rounded ${sortBy === 'price' ? 'bg-orange-500 text-black' : 'bg-gray-200'}`}
+            onClick={() => setSortBy('price')}
           >
             Category 
-          </button>
+          </button> */}
                    
         </div>
         <ul className="bg-black text-white shadow-md rounded">
           {sortedProducts.map(product => (
             <Product
-              key={product.id}
+              //key={product.id}
               name={product.name}
-              quantity={product.quantity}
-              category={product.category}
+              price={product.price}
+              details={product.details}
               image={product.image}
             />
           ))}

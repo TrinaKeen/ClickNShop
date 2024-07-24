@@ -1,0 +1,86 @@
+[
+    {
+      
+      "id": "1h2GJKH12gkHG31h1H",
+      "name": "ABC Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 1",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "2KJH3k2j3H1k2J3K1H",
+      "name": "DEF Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 2",
+      "image": "/product1.jpg"
+    },
+    {
+     "name": "DEF Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 3",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "4k2J3K1H2GJKH12gk",
+      "name": "GHI Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 4",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "5H1h1H2KJH3k2j3H",
+      "name": "JKL Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 5",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "6H1k2J3K1H2GJKH1",
+      "name": "MNO Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 6",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "7gkHG31h1H2KJH3k",
+      "name": "PQR Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 7",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "8j3H1k2J3K1H2GJK",
+      "name": "STU Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 8",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "9H12gkHG31h1H2KJ",
+      "name": "VXW Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 9",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "10H3k2j3H1k2J3K1",
+      "name": "TUY Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 10",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "11k2J3K1H2GJKH12",
+      "name": "AJJ Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 11",
+      "image": "/product1.jpg"
+    },
+    {
+      "id": "12GJKH12gkHG31h1",
+      "name": "LKF Shirt",
+      "price": "$49.99",
+      "details": "Checkers Shirt 12",
+      "image": "/product1.jpg"
+    }
+  ]

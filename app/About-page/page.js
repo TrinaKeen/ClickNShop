@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function AboutPage() {
 	return (
-		<main className="bg-white py-6">
+		<main className="bg-white py-6 text-black">
 			<header>
 				<div >
 					<img src="/logo.jpg" alt="ClickNShop Logo" className="mx-auto mb-4" style={{ height: '100px' }}/>
@@ -10,10 +10,10 @@ export default function AboutPage() {
 						<nav className="mt-4">
 							<ul className="flex justify-center space-x-32 text-lg">
                                 <li className="hover:underline">
-                                    <Link href="../">Home</Link>
+									<a>Men</a>
 								</li>
 								<li className="hover:underline">
-									<a>Men</a>
+								<Link href="./MenPage/">Men</Link>
 								</li>
 								<li className="hover:underline">
 									<a>Women</a>
@@ -61,8 +61,8 @@ export default function AboutPage() {
                         </p>
                     </div>
             </section>
+			
 		</main>
 	);
 }
-
 

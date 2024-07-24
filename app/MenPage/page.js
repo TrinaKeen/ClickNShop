@@ -14,7 +14,7 @@ const handleAddItem = (newProduct) => {
 
 return (
     <main className="min-h-screen bg-black p-4 text-white">
-    <h1 className="text-3xl font-bold text-center mb-6">ClickNShop</h1>
+    <h1 className="text-3xl font-bold text-center mb-6">For Men</h1>
     
     {/* Pass the handleAddItem event handler to the NewItem component as a prop called onAddItem */}
     <newProduct onAddItem={handleAddItem} />

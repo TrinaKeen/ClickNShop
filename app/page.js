@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaSearch } from 'react-icons/fa';
+// import { FaSearch } from 'react-icons/fa';
 
 export default function HomePage() {
 	return (
@@ -9,7 +9,7 @@ export default function HomePage() {
 					<img src="/logo.jpg" alt="ClickNShop Logo" className="mx-auto mb-4" style={{ height: '100px' }}/>
 					<div className="container mx-auto text-center">
 						<nav className="mt-4">
-							<ul className="flex justify-center space-x-32 text-lg">
+							<ul className="flex justify-center space-x-32 text-lg text-black">
 								<li className="hover:underline">
 									<Link href="../">Home</Link>
 								</li>
@@ -29,7 +29,7 @@ export default function HomePage() {
 									<form className="flex items-center">
 										<input 
 											type="text" 
-											 className="border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-blue-600"
+											className="border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-blue-600"
 											placeholder="Search..." 
 										/>
 										<button 
@@ -40,6 +40,9 @@ export default function HomePage() {
 										</button>
 									</form>
 								</li>
+								<li className="hover:underline">
+									<Link href="./Login/">Login</Link>
+								</li>
 							</ul>
 						</nav>
 					</div>
@@ -48,5 +51,3 @@ export default function HomePage() {
 		</main>
 	);
 }
-
-

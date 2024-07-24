@@ -4,6 +4,7 @@
       "id": "1h2GJKH12gkHG31h1H",
       "name": "ABC Shirt",
       "price": "$49.99",
+      "category": "Apparel",
       "details": "Checkers Shirt 1",
       "image": "/product1.jpg"
     },
@@ -11,6 +12,7 @@
       "id": "2KJH3k2j3H1k2J3K1H",
       "name": "DEF Shirt",
       "price": "$49.99",
+      "category": "Shoes",
       "details": "Checkers Shirt 2",
       "image": "/product1.jpg"
     },

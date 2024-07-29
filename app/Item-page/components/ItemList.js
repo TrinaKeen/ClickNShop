@@ -1,37 +1,29 @@
-import { useState } from "react";
+import React from 'react';
 
-const ItemList = ({ items }) => {
-  const [selectedItemId, setSelectedItemId] = useState(null);
-
-  const handleItemClick = (id) => {
-    setSelectedItemId(id === selectedItemId ? null : id);
-  };
-
-  return (
-    <div className="overflow-x-auto whitespace-nowrap p-4">
-      {items.map((item) => (
-        <div
-          key={item.id}
-          className={`inline-block bg-white p-4 m-2 rounded-lg shadow-md hover:shadow-lg transition-shadow w-64 cursor-pointer item-container ${selectedItemId === item.id ? "h-auto" : ""}`}
-          onClick={() => handleItemClick(item.id)}
-          style={{ whiteSpace: "normal" }}
-        >
-          <div className="w-full h-48 flex items-center justify-center">
-            <img
-              src={item.image}
-              alt={item.title}
-              className="max-h-full max-w-full object-contain"
-            />
-          </div>
-          <h2 className="text-xl font-bold mb-2 text-center">{item.title}</h2>
-          <p className="text-lg font-semibold text-center">{`$${item.price}`}</p>
-          {selectedItemId === item.id && (
-            <p className="description text-gray-700 mt-4 text-center">{item.description}</p>
-          )}
-        </div>
-      ))}
-    </div>
-  );
+const ItemList = ({ items, onItemClick }) => {
+	return (
+		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-4">
+			{items.map((item) => (
+				<div
+					key={item.id}
+					className="bg-white p-6 rounded-lg shadow-md cursor-pointer flex flex-col"
+					onClick={() => onItemClick(item)}
+					style={{ width: '250px', height: '600px' }}
+				>
+					<img
+						src={item.image}
+						alt={item.title}
+						style={{ width: '300px', height: '300px', objectFit: 'contain' }} // Fixed image size
+						className="mb-4"
+					/>
+					<div className="flex flex-col flex-grow">
+						<h2 className="text-xl font-bold mb-2">{item.title}</h2>
+						<p className="font-bold text-xl mt-auto">${item.price}</p>
+					</div>
+				</div>
+			))}
+		</div>
+	);
 };
 
 export default ItemList;

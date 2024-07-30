@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 
 export default function HomePage({ email, setLoggedIn }) {
     const [items, setItems] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [selectedItem, setSelectedItem] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -27,18 +26,7 @@ export default function HomePage({ email, setLoggedIn }) {
             }
         };
 
-        const fetchCategories = async () => {
-            try {
-                const response = await fetch("https://fakestoreapi.com/products/categories");
-                const data = await response.json();
-                setCategories(["all", ...data]);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
-
         fetchProducts();
-        fetchCategories();
     }, []);
 
     useEffect(() => {
@@ -46,10 +34,19 @@ export default function HomePage({ email, setLoggedIn }) {
         setCart(storedCart);
     }, []);
 
-    const filteredItems =
-        selectedCategory === "all"
-            ? items
-            : items.filter((item) => item.category === selectedCategory);
+    const filteredItems = selectedCategory === "all"
+        ? items
+        : items.filter((item) =>
+            selectedCategory === "men"
+                ? item.category.toLowerCase() === "men's clothing"
+                : selectedCategory === "women"
+                    ? item.category.toLowerCase() === "women's clothing"
+                    : selectedCategory === "jewelry"
+                        ? item.category.toLowerCase() === "jewelery"
+                        : selectedCategory === "electronics"
+                            ? item.category.toLowerCase() === "electronics"
+                            : true
+        );
 
     const handleItemClick = (item) => {
         setSelectedItem(item);
@@ -97,6 +94,10 @@ export default function HomePage({ email, setLoggedIn }) {
         router.push('/checkout'); // Redirect to /checkout/page.js
     };
 
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
+
     return (
         <main className="bg-white py-6 text-black">
             <header className="container mx-auto flex justify-between items-center">
@@ -104,13 +105,19 @@ export default function HomePage({ email, setLoggedIn }) {
                 <nav>
                     <ul className="flex space-x-8 text-lg">
                         <li className="hover:underline">
-                            <Link href="/">Home</Link>
+                            <Link href="/" onClick={() => handleCategoryClick("all")}>Home</Link>
                         </li>
                         <li className="hover:underline">
-                            <Link href="./Men-page/">Men</Link>
+                            <Link href="#" onClick={() => handleCategoryClick("men")}>Men</Link>
                         </li>
                         <li className="hover:underline">
-                            <Link href="./Women-page/">Women</Link>
+                            <Link href="#" onClick={() => handleCategoryClick("women")}>Women</Link>
+                        </li>
+                        <li className="hover:underline">
+                            <Link href="#" onClick={() => handleCategoryClick("jewelry")}>Accessories</Link>
+                        </li>
+                        <li className="hover:underline">
+                            <Link href="#" onClick={() => handleCategoryClick("electronics")}>Electronics</Link>
                         </li>
                         <li className="hover:underline">
                             <Link href="./About-page/">About</Link>
@@ -145,19 +152,6 @@ export default function HomePage({ email, setLoggedIn }) {
                 <h1 className="text-3xl font-bold text-center mb-8">
                     ClickNShop Items
                 </h1>
-                <div className="mb-4 flex justify-center">
-                    <select
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="border p-2 rounded"
-                    >
-                        {categories.map((category) => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
-                </div>
                 <ItemList items={filteredItems} onItemClick={handleItemClick} />
                 {showPopup && selectedItem && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

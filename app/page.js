@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ItemList from "./Item-page/components/ItemList";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function HomePage({ email, setLoggedIn }) {
     const [items, setItems] = useState([]);
@@ -13,7 +13,9 @@ export default function HomePage({ email, setLoggedIn }) {
     const [showCartPopup, setShowCartPopup] = useState(false);
     const [cart, setCart] = useState([]);
     const [quantity, setQuantity] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -34,19 +36,20 @@ export default function HomePage({ email, setLoggedIn }) {
         setCart(storedCart);
     }, []);
 
-    const filteredItems = selectedCategory === "all"
-        ? items
-        : items.filter((item) =>
-            selectedCategory === "men"
-                ? item.category.toLowerCase() === "men's clothing"
-                : selectedCategory === "women"
-                    ? item.category.toLowerCase() === "women's clothing"
-                    : selectedCategory === "jewelry"
-                        ? item.category.toLowerCase() === "jewelery"
-                        : selectedCategory === "electronics"
-                            ? item.category.toLowerCase() === "electronics"
-                            : true
-        );
+    useEffect(() => {
+        const category = searchParams.get('category');
+        setSelectedCategory(category || 'all');
+      }, [searchParams]);
+    
+      const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+      };
+    
+      const filteredItems = items.filter(item => {
+        const categoryMatch = selectedCategory === "all" || item.category.toLowerCase() === selectedCategory.toLowerCase();
+        const searchMatch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
+        return categoryMatch && searchMatch;
+      });
 
     const handleItemClick = (item) => {
         setSelectedItem(item);
@@ -94,10 +97,6 @@ export default function HomePage({ email, setLoggedIn }) {
         router.push('/checkout'); // Redirect to /checkout/page.js
     };
 
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
-    };
-
     return (
         <main className="bg-white py-6 text-black">
             <header className="container mx-auto flex justify-between items-center">
@@ -105,35 +104,37 @@ export default function HomePage({ email, setLoggedIn }) {
                 <nav>
                     <ul className="flex space-x-8 text-lg">
                         <li className="hover:underline">
-                            <Link href="/" onClick={() => handleCategoryClick("all")}>Home</Link>
+                            <Link href="/">Home</Link>
                         </li>
                         <li className="hover:underline">
-                            <Link href="#" onClick={() => handleCategoryClick("men")}>Men</Link>
+                            <Link href="/?category=men's clothing">Men</Link>
                         </li>
                         <li className="hover:underline">
-                            <Link href="#" onClick={() => handleCategoryClick("women")}>Women</Link>
+                            <Link href="/?category=women's clothing">Women</Link>
                         </li>
                         <li className="hover:underline">
-                            <Link href="#" onClick={() => handleCategoryClick("jewelry")}>Accessories</Link>
+                            <Link href="/?category=jewelery">Accessories</Link>
                         </li>
                         <li className="hover:underline">
-                            <Link href="#" onClick={() => handleCategoryClick("electronics")}>Electronics</Link>
+                            <Link href="/?category=electronics">Electronics</Link>
                         </li>
                         <li className="hover:underline">
                             <Link href="./About-page/">About</Link>
                         </li>
                         <li>
-                            <form className="flex items-center">
+                            <form className="flex items-center" onSubmit={(e) => e.preventDefault()}>
                                 <input
-                                    type="text"
-                                    className="border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                    placeholder="Search..."
+                                type="text"
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                                className="border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                placeholder="Search..."
                                 />
                                 <button
-                                    type="submit"
-                                    className="bg-gray-300 text-white p-1 rounded-r-md hover:bg-blue-700"
+                                type="submit"
+                                className="bg-gray-300 text-white p-1 rounded-r-md hover:bg-blue-700"
                                 >
-                                    Search
+                                Search
                                 </button>
                             </form>
                         </li>

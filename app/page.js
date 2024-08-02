@@ -59,6 +59,7 @@ export default function HomePage({ email, setLoggedIn }) {
     const handleClosePopup = () => {
         setShowPopup(false);
         setSelectedItem(null);
+        setQuantity(1);
     };
 
     const handleAddToCart = () => {

@@ -1,8 +1,7 @@
-"use client"; 
+"use client";
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import ThankYouPage from './Thank-You-Page'; 
 
 const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
@@ -160,7 +159,6 @@ const CheckoutPage = () => {
     setPaymentError(null);
     setPaymentSuccess(null);
 
- 
     const { cardNumberValid, expDateValid, cvcValid, cardholderNameValid } = validatePaymentInfo(cardDetails);
     if (!cardNumberValid || !expDateValid || !cvcValid || !cardholderNameValid) {
       setPaymentError("Invalid payment information. Please check your card details.");
@@ -188,206 +186,210 @@ const CheckoutPage = () => {
     return formatAmount(parseFloat(getTotalPrice().replace(/,/g, '')) + shippingFee);
   };
 
+  if (paymentSuccess) {
+    return (
+      <ThankYouPage 
+        query={{
+          name: customerInfo.name,
+          email: customerInfo.email,
+          address: customerInfo.address,
+          city: customerInfo.city,
+          postalOrZipCode: customerInfo.postalOrZipCode,
+          stateOrProvince: customerInfo.stateOrProvince,
+          lastCardNumber: cardDetails.number.slice(-4),
+          totalAmount: getGrandTotal(),
+          items: JSON.stringify(cart),
+        }} 
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-8 lg:p-12 flex flex-col lg:flex-row lg:justify-between text-black">
       <div className="lg:w-2/3 bg-white p-8 rounded-lg shadow-xl">
-        
-        {paymentSuccess ? (
-          <ThankYouPage query={{
-            name: customerInfo.name,
-            email: customerInfo.email,
-            address: customerInfo.address,
-            city: customerInfo.city,
-            postalOrZipCode: customerInfo.postalOrZipCode,
-            stateOrProvince: customerInfo.stateOrProvince,
-            lastCardNumber: cardDetails.number.slice(-4),
-            totalAmount: getGrandTotal(),
-            items: JSON.stringify(cart),
-          }} />
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <h1 className="text-4xl font-extrabold text-gray-800 mb-6">Checkout</h1>
-            <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
-              <h2 className="text-2xl font-bold mb-4">Customer Information</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <h1 className="text-4xl font-extrabold text-gray-800 mb-6">Checkout</h1>
+          <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
+            <h2 className="text-2xl font-bold mb-4">Customer Information</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={customerInfo.name}
+                  onChange={handleCustomerChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="xxxx@gmail.com"
+                  value={customerInfo.email}
+                  onChange={handleCustomerChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  value={customerInfo.address}
+                  onChange={handleCustomerChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">City</label>
+                <input
+                  type="text"
+                  name="city"
+                  placeholder="City"
+                  value={customerInfo.city}
+                  onChange={handleCustomerChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  {customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}
+                </label>
+                <input
+                  type="text"
+                  name="postalOrZipCode"
+                  placeholder={customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}
+                  value={customerInfo.postalOrZipCode}
+                  onChange={handleCustomerChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Country</label>
+                <select
+                  name="country"
+                  value={customerInfo.country}
+                  onChange={handleCustomerChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select Country</option>
+                  <option value="Canada">Canada</option>
+                  <option value="United States">United States</option>
+                </select>
+              </div>
+              {customerInfo.country === 'Canada' && (
                 <div>
-                  <label className="block text-sm font-medium mb-2">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Full Name"
-                    value={customerInfo.name}
-                    onChange={handleCustomerChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="xxxx@gmail.com"
-                    value={customerInfo.email}
-                    onChange={handleCustomerChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Address</label>
-                  <input
-                    type="text"
-                    name="address"
-                    placeholder="Address"
-                    value={customerInfo.address}
-                    onChange={handleCustomerChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">City</label>
-                  <input
-                    type="text"
-                    name="city"
-                    placeholder="City"
-                    value={customerInfo.city}
-                    onChange={handleCustomerChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    {customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}
-                  </label>
-                  <input
-                    type="text"
-                    name="postalOrZipCode"
-                    placeholder={customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}
-                    value={customerInfo.postalOrZipCode}
-                    onChange={handleCustomerChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Country</label>
+                  <label className="block text-sm font-medium mb-2">Province</label>
                   <select
-                    name="country"
-                    value={customerInfo.country}
+                    name="stateOrProvince"
+                    value={customerInfo.stateOrProvince}
                     onChange={handleCustomerChange}
                     className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   >
-                    <option value="">Select Country</option>
-                    <option value="Canada">Canada</option>
-                    <option value="United States">United States</option>
+                    <option value="">Select Province</option>
+                    {provinces.map((province) => (
+                      <option key={province.value} value={province.value}>{province.label}</option>
+                    ))}
                   </select>
                 </div>
-                {customerInfo.country === 'Canada' && (
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Province</label>
-                    <select
-                      name="stateOrProvince"
-                      value={customerInfo.stateOrProvince}
-                      onChange={handleCustomerChange}
-                      className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    >
-                      <option value="">Select Province</option>
-                      {provinces.map((province) => (
-                        <option key={province.value} value={province.value}>{province.label}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-                {customerInfo.country === 'United States' && (
-                  <div>
-                    <label className="block text-sm font-medium mb-2">State</label>
-                    <select
-                      name="stateOrProvince"
-                      value={customerInfo.stateOrProvince}
-                      onChange={handleCustomerChange}
-                      className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    >
-                      <option value="">Select State</option>
-                      {states.map((state) => (
-                        <option key={state.value} value={state.value}>{state.label}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+              )}
+              {customerInfo.country === 'United States' && (
+                <div>
+                  <label className="block text-sm font-medium mb-2">State</label>
+                  <select
+                    name="stateOrProvince"
+                    value={customerInfo.stateOrProvince}
+                    onChange={handleCustomerChange}
+                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  >
+                    <option value="">Select State</option>
+                    {states.map((state) => (
+                      <option key={state.value} value={state.value}>{state.label}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
+            <h2 className="text-2xl font-bold mb-4">Payment Details</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Card Number</label>
+                <input
+                  type="text"
+                  name="number"
+                  placeholder="xxxx-xxxx-xxxx-xxxx"
+                  value={cardDetails.number}
+                  onChange={handleCardChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Cardholder Name</label>
+                <input
+                  type="text"
+                  name="cardholderName"
+                  placeholder="Cardholder Name"
+                  value={cardDetails.cardholderName}
+                  onChange={handleCardChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Expiration Date</label>
+                <input
+                  type="text"
+                  name="expDate"
+                  placeholder="MM/YY"
+                  value={cardDetails.expDate}
+                  onChange={handleCardChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">CVC</label>
+                <input
+                  type="text"
+                  name="cvc"
+                  placeholder="xxx"
+                  value={cardDetails.cvc}
+                  onChange={handleCardChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
               </div>
             </div>
+          </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
-              <h2 className="text-2xl font-bold mb-4">Payment Details</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Card Number</label>
-                  <input
-                    type="text"
-                    name="number"
-                    placeholder="xxxx-xxxx-xxxx-xxxx"
-                    value={cardDetails.number}
-                    onChange={handleCardChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Cardholder Name</label>
-                  <input
-                    type="text"
-                    name="cardholderName"
-                    placeholder="Cardholder Name"
-                    value={cardDetails.cardholderName}
-                    onChange={handleCardChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Expiration Date</label>
-                  <input
-                    type="text"
-                    name="expDate"
-                    placeholder="MM/YY"
-                    value={cardDetails.expDate}
-                    onChange={handleCardChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">CVC</label>
-                  <input
-                    type="text"
-                    name="cvc"
-                    placeholder="xxx"
-                    value={cardDetails.cvc}
-                    onChange={handleCardChange}
-                    className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-blue-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-            >
-              {loading ? 'Processing...' : 'Purchase Now'}
-            </button>
-            {paymentError && <div className="mt-4 text-red-500 font-medium">{paymentError}</div>}
-          </form>
-        )}
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-blue-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          >
+            {loading ? 'Processing...' : 'Purchase Now'}
+          </button>
+          {paymentError && <div className="mt-4 text-red-500 font-medium">{paymentError}</div>}
+        </form>
       </div>
+
       <div className="lg:w-1/3 lg:ml-8 mt-8 lg:mt-0">
         <div className="bg-white p-8 rounded-lg shadow-xl">
           <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
@@ -422,80 +424,4 @@ const CheckoutPage = () => {
   );
 };
 
-const ThankYouPage = ({ query }) => {
-  const router = useRouter();
-
-  const clearCart = () => {
-    localStorage.removeItem('cart');
-    router.push('/'); 
-  };
-
-  const customerInfo = {
-    name: query.name || '',
-    email: query.email || '',
-    address: query.address || '',
-    city: query.city || '',
-    postalOrZipCode: query.postalOrZipCode || '',
-    stateOrProvince: query.stateOrProvince || ''
-  };
-
-  const lastCardNumber = query.lastCardNumber || '';
-  const totalAmount = query.totalAmount || '0.00';
-  const items = query.items ? JSON.parse(query.items) : [];
-
-  return (
-    <div className="min-h-screen bg-gray-100 p-8 flex flex-col items-center">
-      <h1 className="text-4xl font-extrabold text-gray-800 mb-6">🎉 Thank You!</h1>
-      <p className="text-lg text-gray-600 mb-8">Your payment has been successfully processed. We appreciate your business!</p>
-      
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl w-full text-black">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Order Summary</h2>
-        <div className="mb-6 border-b border-gray-300 pb-4">
-          <h3 className="text-2xl font-semibold text-gray-700 mb-4">Customer Information</h3>
-          <p className="text-gray-600"><strong>Name:</strong> {customerInfo.name}</p>
-          <p className="text-gray-600"><strong>Email:</strong> {customerInfo.email}</p>
-          <p className="text-gray-600"><strong>Address:</strong> {customerInfo.address}</p>
-          <p className="text-gray-600"><strong>City:</strong> {customerInfo.city}</p>
-          <p className="text-gray-600"><strong>{customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}:</strong> {customerInfo.postalOrZipCode}</p>
-          <p className="text-gray-600"><strong>{customerInfo.country === 'United States' ? 'State' : 'Province'}:</strong> {customerInfo.stateOrProvince}</p>
-        </div>
-        
-        <div className="mb-6 border-b border-gray-300 pb-4">
-          <h3 className="text-2xl font-semibold text-gray-700 mb-4">Payment Details</h3>
-          <p className="text-gray-600"><strong>Last Card Number:</strong> **** **** **** {lastCardNumber}</p>
-          <p className="text-gray-600"><strong>Total Amount:</strong> ${totalAmount}</p>
-        </div>
-
-        <div>
-          <h3 className="text-2xl font-semibold text-gray-700 mb-4">Items Purchased</h3>
-          <ul className="space-y-4">
-            {items.map((item, index) => (
-              <li key={index} className="flex items-center border-b border-gray-200 pb-4">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-32 h-32 object-cover rounded-lg shadow-sm mr-6"
-                />
-                <div className="flex-1">
-                  <h4 className="text-lg font-bold text-gray-800">{item.title}</h4>
-                  <p className="text-gray-600">Quantity: {item.quantity}</p>
-                  <p className="text-gray-800 font-bold">${(item.price * item.quantity).toFixed(2)}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div> <br/>
-      <button
-        onClick={clearCart}
-        className="bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
-      >
-        Back to Home
-      </button>
-    </div>
-  );
-};
-
 export default CheckoutPage;
-
-

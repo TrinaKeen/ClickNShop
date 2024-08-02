@@ -172,6 +172,11 @@ const CheckoutPage = () => {
     }, 2000);
   };
 
+
+  const handleCancel = () => {
+    window.location.href = '/';
+  };
+
   const formatAmount = (amount) => {
     return amount
       .toFixed(2) 
@@ -386,6 +391,13 @@ const CheckoutPage = () => {
           >
             {loading ? 'Processing...' : 'Purchase Now'}
           </button>
+          <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-red-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition ml-2"
+            >
+              Cancel
+            </button>
           {paymentError && <div className="mt-4 text-red-500 font-medium">{paymentError}</div>}
         </form>
       </div>

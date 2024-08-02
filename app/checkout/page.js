@@ -113,11 +113,11 @@ const CheckoutPage = () => {
       formattedValue = formattedValue.slice(0, 16).replace(/(.{4})/g, '$1-').replace(/-$/, ''); 
     } else if (name === 'expDate') {
       if (formattedValue.length >= 3) {
-        formattedValue = `${formattedValue.slice(0, 2)}/${formattedValue.slice(2, 4)}`; 
+        formattedValue = `${formattedValue.slice(0, 2)}/${formattedValue.slice(2, 4)}`;
       }
-      formattedValue = formattedValue.slice(0, 5); 
+      formattedValue = formattedValue.slice(0, 5);
     } else if (name === 'cvc') {
-      formattedValue = formattedValue.slice(0, 3); 
+      formattedValue = formattedValue.slice(0, 3);
     } else if (name === 'cardholderName') {
       formattedValue = value; 
     }
@@ -131,7 +131,11 @@ const CheckoutPage = () => {
     const { name, value } = event.target;
     let formattedValue = value;
     if (name === 'postalOrZipCode') {
-      formattedValue = value.slice(0, 6); 
+      if (customerInfo.country === 'United States') {
+        formattedValue = value.replace(/\D/g, '').slice(0, 5); 
+      } else if (customerInfo.country === 'Canada') {
+        formattedValue = value.slice(0, 6);
+      }
     } else if (name === 'city') {
       formattedValue = value.replace(/[^a-zA-Z\s]/g, ''); 
     }
@@ -155,7 +159,7 @@ const CheckoutPage = () => {
     setPaymentError(null);
     setPaymentSuccess(null);
 
-
+ 
     const { cardNumberValid, expDateValid, cvcValid, cardholderNameValid } = validatePaymentInfo(cardDetails);
     if (!cardNumberValid || !expDateValid || !cvcValid || !cardholderNameValid) {
       setPaymentError("Invalid payment information. Please check your card details.");
@@ -163,9 +167,7 @@ const CheckoutPage = () => {
       return;
     }
 
-
     setTimeout(() => {
-
       setPaymentSuccess(true);
       setLoading(false);
     }, 2000);

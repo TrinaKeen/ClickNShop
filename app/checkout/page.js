@@ -444,42 +444,42 @@ const ThankYouPage = ({ query }) => {
   const items = query.items ? JSON.parse(query.items) : [];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6">Thank You!</h1>
-      <p className="text-lg mb-4">Your payment has been successfully processed. We appreciate your business!</p>
+    <div className="min-h-screen bg-gray-100 p-8 flex flex-col items-center">
+      <h1 className="text-4xl font-extrabold text-gray-800 mb-6">🎉 Thank You!</h1>
+      <p className="text-lg text-gray-600 mb-8">Your payment has been successfully processed. We appreciate your business!</p>
       
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full text-black">
-        <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Customer Information</h3>
-          <p><strong>Name:</strong> {customerInfo.name}</p>
-          <p><strong>Email:</strong> {customerInfo.email}</p>
-          <p><strong>Address:</strong> {customerInfo.address}</p>
-          <p><strong>City:</strong> {customerInfo.city}</p>
-          <p><strong>{customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}:</strong> {customerInfo.postalOrZipCode}</p>
-          <p><strong>{customerInfo.country === 'United States' ? 'State' : 'Province'}:</strong> {customerInfo.stateOrProvince}</p>
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl w-full text-black">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Order Summary</h2>
+        <div className="mb-6 border-b border-gray-300 pb-4">
+          <h3 className="text-2xl font-semibold text-gray-700 mb-4">Customer Information</h3>
+          <p className="text-gray-600"><strong>Name:</strong> {customerInfo.name}</p>
+          <p className="text-gray-600"><strong>Email:</strong> {customerInfo.email}</p>
+          <p className="text-gray-600"><strong>Address:</strong> {customerInfo.address}</p>
+          <p className="text-gray-600"><strong>City:</strong> {customerInfo.city}</p>
+          <p className="text-gray-600"><strong>{customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}:</strong> {customerInfo.postalOrZipCode}</p>
+          <p className="text-gray-600"><strong>{customerInfo.country === 'United States' ? 'State' : 'Province'}:</strong> {customerInfo.stateOrProvince}</p>
         </div>
         
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Payment Details</h3>
-          <p><strong>Last Card Number:</strong> **** **** **** {lastCardNumber}</p>
-          <p><strong>Total Amount:</strong> ${totalAmount}</p>
+        <div className="mb-6 border-b border-gray-300 pb-4">
+          <h3 className="text-2xl font-semibold text-gray-700 mb-4">Payment Details</h3>
+          <p className="text-gray-600"><strong>Last Card Number:</strong> **** **** **** {lastCardNumber}</p>
+          <p className="text-gray-600"><strong>Total Amount:</strong> ${totalAmount}</p>
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold mb-2">Items Purchased</h3>
-          <ul>
+          <h3 className="text-2xl font-semibold text-gray-700 mb-4">Items Purchased</h3>
+          <ul className="space-y-4">
             {items.map((item, index) => (
-              <li key={index} className="flex items-center mb-4">
+              <li key={index} className="flex items-center border-b border-gray-200 pb-4">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-32 h-32 object-cover mr-4"
+                  className="w-32 h-32 object-cover rounded-lg shadow-sm mr-6"
                 />
                 <div className="flex-1">
-                  <h4 className="text-lg font-bold">{item.title}</h4>
-                  <p className="text-gray-700">Quantity: {item.quantity}</p>
-                  <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
+                  <h4 className="text-lg font-bold text-gray-800">{item.title}</h4>
+                  <p className="text-gray-600">Quantity: {item.quantity}</p>
+                  <p className="text-gray-800 font-bold">${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               </li>
             ))}
@@ -488,13 +488,10 @@ const ThankYouPage = ({ query }) => {
       </div> <br/>
       <button
         onClick={clearCart}
-        className="bg-gradient-to-r from-purple-400 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+        className="bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
       >
         Back to Home
       </button>
-      
-    
-                        
     </div>
   );
 };

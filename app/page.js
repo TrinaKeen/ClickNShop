@@ -196,36 +196,38 @@ export default function HomePage({ email, setLoggedIn }) {
                         </div>
                     </div>
                 )}
-                {showCartPopup && (
+                 {showCartPopup && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full text-black">
+                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full text-black relative">
                             <h2 className="text-2xl font-bold mb-4">Cart</h2>
-                            {cart.length === 0 ? (
-                                <p className="text-center">Your cart is empty.</p>
-                            ) : (
-                                <ul>
-                                    {cart.map((item, index) => (
-                                        <li key={index} className="flex items-center mb-4">
-                                            <img
-                                                src={item.image}
-                                                alt={item.title}
-                                                className="w-32 h-32 object-cover mr-4"
-                                            />
-                                            <div className="flex-1">
-                                                <h3 className="text-lg font-bold">{item.title}</h3>
-                                                <p className="text-gray-700">Quantity: {item.quantity}</p>
-                                                <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
-                                            </div>
-                                            <button
-                                                className="bg-red-500 text-white py-1 px-3 rounded"
-                                                onClick={() => handleDeleteFromCart(item)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
+                            <div className="overflow-y-auto max-h-80">
+                                {cart.length === 0 ? (
+                                    <p className="text-center">Your cart is empty.</p>
+                                ) : (
+                                    <ul>
+                                        {cart.map((item, index) => (
+                                            <li key={index} className="flex items-center mb-4">
+                                                <img
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    className="w-32 h-32 object-cover mr-4"
+                                                />
+                                                <div className="flex-1">
+                                                    <h3 className="text-lg font-bold">{item.title}</h3>
+                                                    <p className="text-gray-700">Quantity: {item.quantity}</p>
+                                                    <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
+                                                </div>
+                                                <button
+                                                    className="bg-red-500 text-white py-1 px-3 rounded"
+                                                    onClick={() => handleDeleteFromCart(item)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
                             <div className="flex justify-between mt-4 font-bold">
                                 <p>Total:</p>
                                 <p>${getTotalPrice()}</p>

@@ -181,13 +181,13 @@ export default function HomePage({ email, setLoggedIn }) {
                             </div>
                             <div className="flex justify-between mt-4">
                                 <button
-                                    className="bg-blue-500 text-white py-2 px-4 rounded"
+                                    className="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                                     onClick={handleAddToCart}
                                 >
                                     Add to Cart
                                 </button>
                                 <button
-                                    className="bg-gray-500 text-white py-2 px-4 rounded"
+                                    className="bg-red-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                                     onClick={handleClosePopup}
                                 >
                                     Close
@@ -218,7 +218,7 @@ export default function HomePage({ email, setLoggedIn }) {
                                                     <p className="font-bold">${(item.price * item.quantity).toFixed(2)}</p>
                                                 </div>
                                                 <button
-                                                    className="bg-red-500 text-white py-1 px-3 rounded"
+                                                    className="bg-red-500 text-white py-1 px-3 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                                                     onClick={() => handleDeleteFromCart(item)}
                                                 >
                                                     Delete
@@ -234,13 +234,13 @@ export default function HomePage({ email, setLoggedIn }) {
                             </div>
                             <div className="flex justify-between mt-4">
                                 <button
-                                    className="bg-green-500 text-white py-2 px-4 rounded"
+                                    className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                                     onClick={handleCheckout}
                                 >
                                     Proceed to Checkout
                                 </button>
                                 <button
-                                    className="bg-gray-500 text-white py-2 px-4 rounded"
+                                    className="bg-red-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                                     onClick={handleCloseCartPopup}
                                 >
                                     Close

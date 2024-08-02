@@ -1,7 +1,8 @@
-"use client";
+"use client"; 
+
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
@@ -190,7 +191,7 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-8 lg:p-12 flex flex-col lg:flex-row lg:justify-between text-black">
       <div className="lg:w-2/3 bg-white p-8 rounded-lg shadow-xl">
-        <h1 className="text-4xl font-extrabold text-gray-800 mb-6">Checkout</h1>
+        
         {paymentSuccess ? (
           <ThankYouPage query={{
             name: customerInfo.name,
@@ -205,6 +206,7 @@ const CheckoutPage = () => {
           }} />
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+            <h1 className="text-4xl font-extrabold text-gray-800 mb-6">Checkout</h1>
             <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
               <h2 className="text-2xl font-bold mb-4">Customer Information</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -380,7 +382,7 @@ const CheckoutPage = () => {
               disabled={loading}
               className="bg-blue-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             >
-              {loading ? 'Processing...' : 'Pay Now'}
+              {loading ? 'Processing...' : 'Purchase Now'}
             </button>
             {paymentError && <div className="mt-4 text-red-500 font-medium">{paymentError}</div>}
           </form>
@@ -403,7 +405,7 @@ const CheckoutPage = () => {
                   <div className="flex-1 ml-4">
                     <h3 className="text-lg font-semibold">{item.title}</h3>
                     <p className="text-gray-600">Quantity: {item.quantity}</p>
-                    <p className="text-gray-800 font-bold">CAD ${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="text-gray-800 font-bold">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 </li>
               ))}
@@ -421,6 +423,13 @@ const CheckoutPage = () => {
 };
 
 const ThankYouPage = ({ query }) => {
+  const router = useRouter();
+
+  const clearCart = () => {
+    localStorage.removeItem('cart');
+    router.push('/'); 
+  };
+
   const customerInfo = {
     name: query.name || '',
     email: query.email || '',
@@ -477,14 +486,19 @@ const ThankYouPage = ({ query }) => {
           </ul>
         </div>
       </div> <br/>
+      <button
+        onClick={clearCart}
+        className="bg-gradient-to-r from-purple-400 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+      >
+        Back to Home
+      </button>
       
-      <Link href="/" className="inline-block bg-gradient-to-r from-purple-400 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-       Back to Home
-      
-    </Link>
+    
                         
     </div>
   );
 };
 
 export default CheckoutPage;
+
+

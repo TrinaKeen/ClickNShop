@@ -99,61 +99,80 @@ export default function HomePage({ email, setLoggedIn }) {
     };
 
     return (
-        <main className="bg-white py-6 text-black">
-            <header className="container mx-auto flex justify-between items-center">
-                <img src="/logo2.jpg" alt="ClickNShop Logo" className="h-20" />
-                <nav>
-                    <ul className="flex space-x-8 text-lg">
-                        <li className="hover:underline">
-                            <Link href="/">Home</Link>
-                        </li>
-                        <li className="hover:underline">
-                            <Link href="/?category=men's clothing">Men</Link>
-                        </li>
-                        <li className="hover:underline">
-                            <Link href="/?category=women's clothing">Women</Link>
-                        </li>
-                        <li className="hover:underline">
-                            <Link href="/?category=jewelery">Accessories</Link>
-                        </li>
-                        <li className="hover:underline">
-                            <Link href="/?category=electronics">Electronics</Link>
-                        </li>
-                        <li className="hover:underline">
-                            <Link href="./About-page/">About</Link>
-                        </li>
-                        <li>
-                            <form className="flex items-center" onSubmit={(e) => e.preventDefault()}>
-                                <input
+        <main className="bg-white text-black">
+            <header className="bg-gray-800 text-white py-4 px-6 shadow-md">
+                <div className="container mx-auto flex justify-between items-center">
+                    <div className="flex items-center">
+                        <img src="/logo2.jpg" alt="ClickNShop Logo" className="h-12 mr-4" />
+                        <h1 className="text-2xl font-bold">ClickNShop</h1>
+                    </div>
+                    <nav className="flex-1">
+                        <ul className="flex space-x-8 text-lg justify-center">
+                            <li className="hover:underline">
+                                <Link href="/">Home</Link>
+                            </li>
+                            <li className="hover:underline">
+                                <Link href="/?category=men's clothing">Men</Link>
+                            </li>
+                            <li className="hover:underline">
+                                <Link href="/?category=women's clothing">Women</Link>
+                            </li>
+                            <li className="hover:underline">
+                                <Link href="/?category=jewelery">Accessories</Link>
+                            </li>
+                            <li className="hover:underline">
+                                <Link href="/?category=electronics">Electronics</Link>
+                            </li>
+                            <li className="hover:underline">
+                                <Link href="./About-page/">About</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div className="flex items-center">
+                        <form className="flex items-center" onSubmit={(e) => e.preventDefault()}>
+                            <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={handleSearchChange}
-                                className="border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 text-black"
                                 placeholder="Search..."
-                                />
-                                <button
-                                type="submit"
-                                className="bg-gray-300 text-white p-1 rounded-r-md hover:bg-blue-700"
-                                >
-                                Search
-                                </button>
-                            </form>
-                        </li>
-                        <li className="hover:underline">
-                            <button
-                                className="hover:underline"
-                                onClick={handleViewCart}
+                            />
+                        </form>
+                        <button className="ml-4 hover:underline flex items-center" onClick={handleViewCart}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                className="w-6 h-6"
                             >
-                                View Cart ({cart.length})
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M3 3h2l.4 2M7 13h10l1.6-8H6.4M7 13l-1 5m0 0h13m-13 0a1 1 0 001 1h10a1 1 0 001-1m-12-1h1.5m5 0h1.5"
+                                />
+                            </svg>
+                            <span className="ml-1">Cart ({cart.length})</span>
+                        </button>
+                    </div>
+                </div>
             </header>
             <div className="min-h-screen bg-gray-100 p-4">
-                <h1 className="text-3xl font-bold text-center mb-8">
-                    ClickNShop Items
-                </h1>
+                <div className="bg-blue-300 text-center py-3 rounded-lg shadow-md mb-4 relative">
+                    <div className="absolute top-0 left-0 w-9 h-9 bg-red-500 text-white flex items-center justify-center font-bold rounded-full transform -translate-y-1/2 -translate-x-1/2">
+                        50%
+                    </div>
+                    <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+                        ClickNShop Sale!
+                    </h1>
+                    <h2 className="text-2xl text-gray-700">
+                        Up to 50% Off
+                    </h2>
+                    <button className="mt-4 text-white bg-green-500 py-2 px-4 rounded shadow">
+                        Shop Now
+                    </button>
+                </div>
                 <ItemList items={filteredItems} onItemClick={handleItemClick} />
                 {showPopup && selectedItem && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -196,7 +215,7 @@ export default function HomePage({ email, setLoggedIn }) {
                         </div>
                     </div>
                 )}
-                 {showCartPopup && (
+                {showCartPopup && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full text-black relative">
                             <h2 className="text-2xl font-bold mb-4">Cart</h2>

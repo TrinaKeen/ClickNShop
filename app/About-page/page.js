@@ -37,54 +37,62 @@ export default function AboutPage() {
   };
 
   return (
-    <main className="bg-white py-6 text-black">
-      <header className="container mx-auto flex justify-between items-center">
-        <img src="/logo2.jpg" alt="ClickNShop Logo" className="h-20" />
-        <nav>
-          <ul className="flex space-x-8 text-lg text-black">
-            <li className="hover:underline">
-              <Link href="/">Home</Link>
-            </li>
-            <li className="hover:underline">
-              <Link href="/?category=men">Men</Link>
-            </li>
-            <li className="hover:underline">
-              <Link href="/?category=women">Women</Link>
-            </li>
-            <li className="hover:underline">
-              <Link href="/?category=jewelry">Accessories</Link>
-            </li>
-            <li className="hover:underline">
-              <Link href="/?category=electronics">Electronics</Link>
-            </li>
-            <li className="hover:underline">
-              <Link href="./About-page/">About</Link>
-            </li>
-            <li>
-              <form className="flex items-center">
-                <input
-                  type="text"
-                  className="border border-gray-300 p-1 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  placeholder="Search..."
-                />
-                <button
-                  type="submit"
-                  className="bg-gray-300 text-white p-1 rounded-r-md hover:bg-blue-700"
-                >
-                  Search
-                </button>
-              </form>
-            </li>
-            <li className="hover:underline">
-              <button
-                className="hover:underline"
-                onClick={handleViewCart}
+    <main className="bg-white text-black">
+      <header className="bg-gray-800 text-white py-4 px-6 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center">
+            <img src="/logo2.jpg" alt="ClickNShop Logo" className="h-12 mr-4" />
+            <h1 className="text-2xl font-bold">ClickNShop</h1>
+          </div>
+          <nav className="flex-1">
+            <ul className="flex space-x-8 text-lg justify-center">
+              <li className="hover:underline">
+                <Link href="/">Home</Link>
+              </li>
+              <li className="hover:underline">
+                <Link href="/?category=men's clothing">Men</Link>
+              </li>
+              <li className="hover:underline">
+                <Link href="/?category=women's clothing">Women</Link>
+              </li>
+              <li className="hover:underline">
+                <Link href="/?category=jewelery">Accessories</Link>
+              </li>
+              <li className="hover:underline">
+                <Link href="/?category=electronics">Electronics</Link>
+              </li>
+              <li className="hover:underline">
+                <Link href="./About-page/">About</Link>
+              </li>
+            </ul>
+          </nav>
+          <div className="flex items-center">
+            <form className="flex items-center" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="text"
+                className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 text-black"
+                placeholder="Search..."
+              />
+            </form>
+            <button className="ml-4 hover:underline flex items-center" onClick={handleViewCart}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-6 h-6"
               >
-                View Cart ({cart.length})
-              </button>
-            </li>
-          </ul>
-        </nav>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l1.6-8H6.4M7 13l-1 5m0 0h13m-13 0a1 1 0 001 1h10a1 1 0 001-1m-12-1h1.5m5 0h1.5"
+                />
+              </svg>
+              <span className="ml-1">Cart ({cart.length})</span>
+            </button>
+          </div>
+        </div>
       </header>
       <section className="container mx-auto px-4 py-12">
         <h1 className="text-center text-4xl font-bold mb-8">OUR STORY</h1>

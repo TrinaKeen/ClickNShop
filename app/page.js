@@ -103,8 +103,12 @@ export default function HomePage({ email, setLoggedIn }) {
             <header className="bg-gray-800 text-white py-4 px-6 shadow-md">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center">
+                        <a href="/">
                         <img src="/logo2.jpg" alt="ClickNShop Logo" className="h-12 mr-4" />
+                        </a>
+                        <a href="/">
                         <h1 className="text-2xl font-bold">ClickNShop</h1>
+                        </a>
                     </div>
                     <nav className="flex-1">
                         <ul className="flex space-x-8 text-lg justify-center">

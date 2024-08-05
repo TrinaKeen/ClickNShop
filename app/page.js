@@ -14,6 +14,7 @@ export default function HomePage({ email, setLoggedIn }) {
     const [cart, setCart] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -122,7 +123,7 @@ export default function HomePage({ email, setLoggedIn }) {
                                 <Link href="/?category=women's clothing">Women</Link>
                             </li>
                             <li className="hover:underline">
-                                <Link href="/?category=jewelery">Accessories</Link>
+                                <Link href="/?category=jewelry">Accessories</Link>
                             </li>
                             <li className="hover:underline">
                                 <Link href="/?category=electronics">Electronics</Link>

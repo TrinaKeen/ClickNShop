@@ -15,6 +15,7 @@ const ThankYouPage = ({ query }) => {
       name: query.name || '',
       email: query.email || '',
       address: query.address || '',
+      phoneNumber: query.phoneNumber || '',
       city: query.city || '',
       postalOrZipCode: query.postalOrZipCode || '',
       stateOrProvince: query.stateOrProvince || ''
@@ -35,6 +36,7 @@ const ThankYouPage = ({ query }) => {
             <h3 className="text-2xl font-semibold text-gray-700 mb-4">Customer Information</h3>
             <p className="text-gray-600"><strong>Name:</strong> {customerInfo.name}</p>
             <p className="text-gray-600"><strong>Email:</strong> {customerInfo.email}</p>
+            <p className="text-gray-600"><strong>Phone Number:</strong> {customerInfo.phoneNumber}</p>
             <p className="text-gray-600"><strong>Address:</strong> {customerInfo.address}</p>
             <p className="text-gray-600"><strong>City:</strong> {customerInfo.city}</p>
             <p className="text-gray-600"><strong>{customerInfo.country === 'United States' ? 'Zip Code' : 'Postal Code'}:</strong> {customerInfo.postalOrZipCode}</p>

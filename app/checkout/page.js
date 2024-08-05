@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import ThankYouPage from './Thank-You-Page'; 
+import Link from 'next/link';
 
 const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,8 @@ const CheckoutPage = () => {
     city: '',
     postalOrZipCode: '',
     country: '',
-    stateOrProvince: '' 
+    stateOrProvince: '',
+    phoneNumber: ''
   });
   const [cart, setCart] = useState([]);
   const [shippingFee, setShippingFee] = useState(0);
@@ -138,6 +140,8 @@ const CheckoutPage = () => {
       }
     } else if (name === 'city') {
       formattedValue = value.replace(/[^a-zA-Z\s]/g, ''); 
+    } else if (name === 'phoneNumber') {
+      formattedValue = formattedValue.replace(/\D/g, '').slice(0, 10).replace(/(\d{3})(\d{3})(\d{4})/, '($1)-$2-$3');
     }
     setCustomerInfo((prev) => ({
       ...prev,
@@ -150,7 +154,8 @@ const CheckoutPage = () => {
     const expDateValid = /^(0[1-9]|1[0-2])\/\d{2}$/.test(cardDetails.expDate); 
     const cvcValid = /^\d{3}$/.test(cardDetails.cvc);
     const cardholderNameValid = cardDetails.cardholderName.trim() !== ''; 
-    return { cardNumberValid, expDateValid, cvcValid, cardholderNameValid };
+    const phoneNumberValid = /^\(\d{3}\)-\d{3}-\d{4}$/.test(customerInfo.phoneNumber);
+    return { cardNumberValid, expDateValid, cvcValid, cardholderNameValid,phoneNumberValid };
   };
 
   const handleSubmit = (event) => {
@@ -159,9 +164,15 @@ const CheckoutPage = () => {
     setPaymentError(null);
     setPaymentSuccess(null);
 
-    const { cardNumberValid, expDateValid, cvcValid, cardholderNameValid } = validatePaymentInfo(cardDetails);
-    if (!cardNumberValid || !expDateValid || !cvcValid || !cardholderNameValid) {
-      setPaymentError("Invalid payment information. Please check your card details.");
+    const { cardNumberValid, expDateValid, cvcValid, cardholderNameValid, phoneNumberValid } = validatePaymentInfo(cardDetails);
+    if (!cardNumberValid || !expDateValid || !cvcValid || !cardholderNameValid || !phoneNumberValid) {
+      let errorMessage = "Invalid payment information. Please check your";
+      if (!cardNumberValid) errorMessage += " card number,";
+      if (!expDateValid) errorMessage += " expiration date,";
+      if (!cvcValid) errorMessage += " CVC,";
+      if (!cardholderNameValid) errorMessage += " cardholder name,";
+      if (!phoneNumberValid) errorMessage += " phone number";
+      setPaymentError(errorMessage.replace(/,\s*$/, "") + ".");
       setLoading(false);
       return;
     }
@@ -197,6 +208,7 @@ const CheckoutPage = () => {
         query={{
           name: customerInfo.name,
           email: customerInfo.email,
+          phoneNumber: customerInfo.phoneNumber,
           address: customerInfo.address,
           city: customerInfo.city,
           postalOrZipCode: customerInfo.postalOrZipCode,
@@ -211,7 +223,17 @@ const CheckoutPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 lg:p-12 flex flex-col lg:flex-row lg:justify-between text-black">
-      <div className="lg:w-2/3 bg-white p-8 rounded-lg shadow-xl">
+      {cart.length === 0 ? (
+        <div className="lg:w-2/3 bg-white p-8 rounded-lg shadow-xl">
+          <h1 className="text-4xl font-extrabold text-gray-800 mb-6">Your Cart is Empty</h1>
+          <p className="text-center text-gray-500">Please add items to your cart before proceeding to checkout.</p>
+          <div className="mt-6 text-center">
+            <Link href="../" className="bg-blue-600 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+              Go Back to Home
+            </Link>
+          </div>
+        </div>
+      ) : (<div className="lg:w-2/3 bg-white p-8 rounded-lg shadow-xl">
         <form onSubmit={handleSubmit} className="space-y-6">
           <h1 className="text-4xl font-extrabold text-gray-800 mb-6">Checkout</h1>
           <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
@@ -242,11 +264,23 @@ const CheckoutPage = () => {
                 />
               </div>
               <div>
+                <label className="block text-sm font-medium mb-2">Phone Number</label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  placeholder="(555)-555-555"
+                  value={customerInfo.phoneNumber}
+                  onChange={handleCustomerChange}
+                  className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
                 <label className="block text-sm font-medium mb-2">Address</label>
                 <input
                   type="text"
                   name="address"
-                  placeholder="Address"
+                  placeholder="123 Address Lane"
                   value={customerInfo.address}
                   onChange={handleCustomerChange}
                   className="border border-gray-300 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -401,6 +435,7 @@ const CheckoutPage = () => {
           {paymentError && <div className="mt-4 text-red-500 font-medium">{paymentError}</div>}
         </form>
       </div>
+      )}
 
       <div className="lg:w-1/3 lg:ml-8 mt-8 lg:mt-0">
         <div className="bg-white p-8 rounded-lg shadow-xl">
